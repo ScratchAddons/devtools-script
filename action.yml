@@ -1,0 +1,19 @@
+name: "Scratch Addons"
+author: "apple502j"
+description: "Build DevTools extension."
+runs:
+    using: "composite"
+    steps:
+        - run: npm ci
+          shell: bash
+          working-directory: ${{ github.action_path }}
+          name: "Install dependencies"
+        - run: npm run build
+          shell: bash
+          working-directory: ${{ github.action_path }}
+          name: "Build DevTools extension"
+        - run: bash $GITHUB_ACTION_PATH/scripts/commit.sh
+          shell: bash
+          name: "Push to GitHub"
+          env:
+              - ACTION_PATH: ${{ github.action_path }}

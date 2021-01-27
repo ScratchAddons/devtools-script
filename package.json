@@ -1,0 +1,27 @@
+{
+  "name": "devtools-script",
+  "version": "1.0.0",
+  "description": "GitHub Actions script to update DevTools Extension repo",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build": "node ./scripts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScratchAddons/devtools-script.git"
+  },
+  "author": "apple502j",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ScratchAddons/devtools-script/issues"
+  },
+  "homepage": "https://github.com/ScratchAddons/devtools-script#readme",
+  "dependencies": {
+    "@octokit/rest": "^18.0.15",
+    "chalk": "^4.1.0",
+    "fs-extra": "^9.1.0",
+    "node-fetch": "^2.6.1"
+  },
+  "type": "module"
+}
