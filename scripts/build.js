@@ -129,3 +129,14 @@ success("created extension translations");
 await fs.rm("./tmp/README.md");
 await fs.move("./tmp/REAL_README.md", "./tmp/README.md");
 success("replaced README");
+
+// then update versions
+const saManifest = await fetch(`${RAW_PREFIX}/manifest.json`);
+const saManifestJSON = await saManifest.json();
+
+const devtoolsManifest = await fs.readFile("./tmp/manifest.json", "utf8");
+const devtoolsManifestJSON = JSON.parse(devtoolsManifest);
+
+devtoolsManifestJSON.version = saManifestJSON.version;
+await fs.writeFile("./tmp/manifest.json", JSON.stringify(devtoolsManifestJSON, undefined, 2), "utf8");
+success("updated version");
