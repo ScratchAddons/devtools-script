@@ -16,4 +16,4 @@ runs:
           shell: bash
           name: "Push to GitHub"
           env:
-              - ACTION_PATH: ${{ github.action_path }}
+            ACTION_PATH: ${{ github.action_path }}
