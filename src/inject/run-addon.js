@@ -40,14 +40,15 @@ const addon = {
       const classNamesArr = [
         ...new Set(
           [...document.styleSheets]
-            .filter(
-              (styleSheet) =>
-                !(
-                  styleSheet.ownerNode.textContent.startsWith(
-                    "/* DO NOT EDIT\n@todo This file is copied from GUI and should be pulled out into a shared library."
-                  ) && styleSheet.ownerNode.textContent.includes("input_input-form")
-                )
-            )
+          .filter(
+            (styleSheet) =>
+              !(
+                styleSheet.ownerNode.textContent.startsWith(
+                  "/* DO NOT EDIT\n@todo This file is copied from GUI and should be pulled out into a shared library."
+                ) &&
+                (styleSheet.ownerNode.textContent.includes("input_input-form") ||
+                  styleSheet.ownerNode.textContent.includes("label_input-group_"))
+              )
             .map((e) => {
               try {
                 return [...e.cssRules];
