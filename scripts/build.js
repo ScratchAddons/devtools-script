@@ -15,7 +15,7 @@ const KNOWN_FILES = {
   "/libraries/l10n.js": "/libraries/l10n.js",
   "/content-scripts/inject/l10n.js": "/inject/l10n.js",
 };
-const RAW_PREFIX = `https://raw.githubusercontent.com/${OWNER}/${REPO}/v1.9.x`;
+const RAW_PREFIX = `https://raw.githubusercontent.com/${OWNER}/${REPO}/master`;
 
 const success = (...args) => console.log(chalk`{green SUCCESS}:`, ...args);
 const pipeline = promisify(stream.pipeline);
