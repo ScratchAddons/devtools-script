@@ -77,6 +77,9 @@ const langCode = `; ${document.cookie}`.split("; scratchlanguage=").pop().split(
 function getL10NURLs() {
   // Note: not identical to Scratch Addons function
   const urls = [getURL(`l10n/${langCode}`)];
+  if (langCode === "pt") {
+    urls.push(getURL(`addons-l10n/pt-br`));
+  }
   if (langCode.includes("-")) {
     urls.push(getURL(`l10n/${langCode.split("-")[0]}`));
   }
