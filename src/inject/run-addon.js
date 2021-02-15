@@ -1,6 +1,6 @@
 import Localization from "./l10n.js";
 
-// Make sure SA lower than v1.9.0 doesn't run editor-devtools
+// Make sure SA doesn't run editor-devtools
 window.initGUI = true;
 
 const MAIN_JS = "userscript.js";
@@ -89,6 +89,12 @@ const l10nObject = new Localization(getL10NURLs());
 const msg = (key, placeholders) => l10nObject.get(`editor-devtools/${key}`, placeholders);
 msg.locale = langCode;
 
+const isPageReady = () =>
+  // Make sure <title> element exists to make sure Scratch <style>s were injected,
+  // which are necessary for addon.tab.scratchClass() calls.
+  // We also need the stage element to be there to get the VM object.
+  document.querySelector("title") && document.querySelector('div[class^="stage-wrapper_stage-wrapper_"]');
+
 l10nObject.loadByAddonId("editor-devtools").then(() =>
   import(scriptUrl).then((module) => {
     const loaded = () => {
@@ -105,7 +111,18 @@ l10nObject.loadByAddonId("editor-devtools").then(() =>
         safeMsg: (key, placeholders) => l10nObject.escaped(`editor-devtools/${key}`, placeholders),
       });
     };
-    if (document.readyState === "complete") loaded();
-    else window.addEventListener("load", () => loaded(), { once: true });
+    if (isPageReady()) {
+      if (document.readyState === "complete") loaded();
+      else window.addEventListener("load", () => loaded(), { once: true });
+    } else {
+      const observer = new MutationObserver(() => {
+        if (isPageReady()) {
+          if (document.readyState === "complete") loaded();
+          else window.addEventListener("load", () => loaded(), { once: true });
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
   })
 );
