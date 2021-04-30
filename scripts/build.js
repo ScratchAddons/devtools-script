@@ -49,13 +49,13 @@ success("downloaded ScratchAddons files");
 
 // Part 2: editor-devtools
 // This requires tree to download recursively
-const {data: allAddonsInfo} = await octokit.repos.getContent({
+const {data: allAddonsInfo} = await octokit.rest.repos.getContent({
   owner: OWNER,
   repo: REPO,
   path: "addons"
 });
 const editorDevToolsSHA = allAddonsInfo.find(item => item.name === "editor-devtools").sha;
-const editorDevToolsFiles = (await octokit.git.getTree({
+const editorDevToolsFiles = (await octokit.rest.git.getTree({
   owner: OWNER,
   repo: REPO,
   tree_sha: editorDevToolsSHA,
@@ -82,7 +82,7 @@ await Promise.all(files.map(async file => {
 success("downloaded files for DevTools addon");
 
 // Download l10n
-const {data: localeDirs} = await octokit.repos.getContent({
+const {data: localeDirs} = await octokit.rest.repos.getContent({
   owner: OWNER,
   repo: REPO,
   path: "addons-l10n"
