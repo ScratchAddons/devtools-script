@@ -7,15 +7,16 @@ import {default as chalk} from "chalk";
 
 const OWNER = "ScratchAddons";
 const REPO = "ScratchAddons";
+const BRANCH = "master";
 
 // SA path: DevTools path
 const KNOWN_FILES = {
-  "/libraries/autoescaper.js": "/libraries/autoescaper.js",
-  "/libraries/intl-messageformat.umd.min.js": "/libraries/intl-messageformat.umd.min.js",
-  "/libraries/l10n.js": "/libraries/l10n.js",
+  "/libraries/common/cs/autoescaper.js": "/libraries/common/cs/autoescaper.js",
+  "/libraries/thirdparty/cs/icu-message-formatter.es.min.js": "/libraries/thirdparty/cs/icu-message-formatter.es.min.js",
+  "/libraries/common/cs/l10n.js": "/libraries/common/cs/l10n.js",
   "/content-scripts/inject/l10n.js": "/inject/l10n.js",
 };
-const RAW_PREFIX = `https://raw.githubusercontent.com/${OWNER}/${REPO}/master`;
+const RAW_PREFIX = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 
 const success = (...args) => console.log(chalk`{green SUCCESS}:`, ...args);
 const pipeline = promisify(stream.pipeline);
@@ -34,7 +35,8 @@ success("copied DevTools specific files");
 await fs.mkdir("./tmp/_locales");
 await fs.mkdir("./tmp/addon");
 await fs.mkdir("./tmp/l10n");
-await fs.mkdir("./tmp/libraries");
+await fs.ensureDir("./tmp/libraries/thirdparty/cs");
+await fs.ensureDir("./tmp/libraries/common/cs");
 success("created directories");
 
 // Download files from ScratchAddons/ScratchAddons
@@ -49,13 +51,13 @@ success("downloaded ScratchAddons files");
 
 // Part 2: editor-devtools
 // This requires tree to download recursively
-const {data: allAddonsInfo} = await octokit.repos.getContent({
+const {data: allAddonsInfo} = await octokit.rest.repos.getContent({
   owner: OWNER,
   repo: REPO,
   path: "addons"
 });
 const editorDevToolsSHA = allAddonsInfo.find(item => item.name === "editor-devtools").sha;
-const editorDevToolsFiles = (await octokit.git.getTree({
+const editorDevToolsFiles = (await octokit.rest.git.getTree({
   owner: OWNER,
   repo: REPO,
   tree_sha: editorDevToolsSHA,
@@ -82,7 +84,7 @@ await Promise.all(files.map(async file => {
 success("downloaded files for DevTools addon");
 
 // Download l10n
-const {data: localeDirs} = await octokit.repos.getContent({
+const {data: localeDirs} = await octokit.rest.repos.getContent({
   owner: OWNER,
   repo: REPO,
   path: "addons-l10n"
