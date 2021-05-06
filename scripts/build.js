@@ -13,6 +13,7 @@ const BRANCH = "master";
 const KNOWN_FILES = {
   "/libraries/common/cs/autoescaper.js": "/libraries/common/cs/autoescaper.js",
   "/libraries/thirdparty/cs/icu-message-formatter.es.min.js": "/libraries/thirdparty/cs/icu-message-formatter.es.min.js",
+  "/libraries/thirdparty/cs/icu-message-formatter.es.min.js.map": "/libraries/thirdparty/cs/icu-message-formatter.es.min.js.map",
   "/libraries/common/cs/l10n.js": "/libraries/common/cs/l10n.js",
   "/content-scripts/inject/l10n.js": "/inject/l10n.js",
 };
