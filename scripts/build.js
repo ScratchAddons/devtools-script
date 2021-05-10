@@ -143,3 +143,8 @@ const devtoolsManifestJSON = JSON.parse(devtoolsManifest);
 devtoolsManifestJSON.version = saManifestJSON.version;
 await fs.writeFile("./tmp/manifest.json", JSON.stringify(devtoolsManifestJSON, undefined, 2), "utf8");
 success("updated version");
+
+await fs.move("./tmp/_locales/pt-br", "./tmp/_locales/pt_BR");
+await fs.ensureDir("./tmp/_locales/pt_PT");
+await fs.copy("./tmp/_locales/pt_BR", "./tmp/_locales/pt_PT");
+success("copied portuguese files");
