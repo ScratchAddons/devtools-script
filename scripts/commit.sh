@@ -2,6 +2,8 @@
 
 cd $ACTION_PATH
 
+# this ignores dotfiles (i.e. workflow)
+rm -rf $GITHUB_WORKSPACE/**
 cp -r ./tmp/* $GITHUB_WORKSPACE/
 
 cd $GITHUB_WORKSPACE
