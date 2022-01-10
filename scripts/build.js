@@ -19,7 +19,7 @@ const KNOWN_FILES = {
 };
 const RAW_PREFIX = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 
-const success = (...args) => console.log(chalk`{green SUCCESS}:`, ...args);
+const success = (...args) => console.log(chalk.green("SUCCESS") + ":", ...args);
 const pipeline = promisify(stream.pipeline);
 const countSlashes = str => Array.from(str.matchAll("/")).length;
 
