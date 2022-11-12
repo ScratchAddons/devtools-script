@@ -21,7 +21,7 @@
     "@octokit/rest": "^19.0.5",
     "chalk": "^5.1.2",
     "fs-extra": "^10.1.0",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.3.0"
   },
   "type": "module"
 }
