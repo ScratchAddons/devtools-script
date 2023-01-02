@@ -19,7 +19,7 @@
   "homepage": "https://github.com/ScratchAddons/devtools-script#readme",
   "dependencies": {
     "@octokit/rest": "^19.0.5",
-    "chalk": "^5.1.2",
+    "chalk": "^5.2.0",
     "fs-extra": "^11.1.0",
     "node-fetch": "^3.3.0"
   },
